@@ -41,7 +41,7 @@ gem 'jquery-rails'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 group :production do
-      gem 'pg', '0.12.2'
+  gem 'pg', '0.12.2'
 end
 
 group :test do
