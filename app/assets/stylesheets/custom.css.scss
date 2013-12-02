@@ -1,38 +1,42 @@
 @import "bootstrap";
+
 /* mixins, variables, etc. */
 
-$grayLight: #CCCCCC;
 $grayMediumLight: #eaeaea;
-$gray: #808080;
-$grayDarker: 4D4D4D;
-
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box; 
- }
+  box-sizing: border-box;
+}
 
 /* universal */
+
 html {
   overflow-y: scroll;
 }
+
 body {
   padding-top: 60px;
 }
+
 section {
   overflow: auto;
 }
+
 textarea {
   resize: vertical;
 }
+
 .center {
   text-align: center;
   h1 {
     margin-bottom: 10px;
   }
 }
+
 /* typography */
+
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
 }
@@ -52,12 +56,15 @@ h2 {
   font-weight: normal;
   color: $grayLight;
 }
+
 p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
 
+
 /* header */
+
 #logo {
   float: left;
   margin-right: 10px;
@@ -73,20 +80,22 @@ p {
     text-decoration: none;
   }
 }
+
 /* footer */
+
 footer {
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
   color: $grayLight;
   a {
-    color: $gray; 
-    &:hover {
+    color: $gray;
+    &:hover { 
       color: $grayDarker;
     }
-  }
-  small {
-    float: left;
+  }  
+  small { 
+    float: left; 
   }
   ul {
     float: right;
@@ -98,18 +107,18 @@ footer {
   }
 }
 
-
 /* miscellaneous */
+
 .debug_dump {
   clear: both;
   float: left;
   width: 100%;
   margin-top: 45px;
- @include box_sizing;
- }
+  @include box_sizing;
+}
 
+/* sidebar */
 
- /* sidebar */
 aside {
   section {
     padding: 10px 0;
@@ -131,31 +140,103 @@ aside {
     }
   }
 }
+
 .gravatar {
   float: left;
   margin-right: 10px;
+}
+
+.stats {
+  overflow: auto;
+  a {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $grayLighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: $blue;
+    }
   }
+  strong {
+    display: block;
+  }
+}
 
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  .gravatar {
+    margin: 1px 1px;
+  }
+}
 
+/* forms */
 
-  /* forms */
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
-  padding: 10px;
   height: auto;
   margin-bottom: 15px;
-  @include box_sizing;
- }
+  @include box_sizing;  
+}
 
 #error_explanation {
- color: #f00;
+  color: #f00;
   ul {
     list-style: none;
-   margin: 0 0 18px 0;
-   }
-   }
+    margin: 0 0 18px 0;
+  }
+}
+
 .field_with_errors {
   @extend .control-group;
- @extend .error;
- }
+  @extend .error;
+}
+
+/* users index */
+
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:last-child {
+      border-bottom: 1px solid $grayLighter;
+    }
+  }
+}
+
+/* microposts */
+
+.microposts {
+  list-style: none;
+  margin: 10px 0 0 0;
+
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+}
+.content {
+  display: block;
+}
+.timestamp {
+  color: $grayLight;
+}
+.gravatar {
+  float: left;
+  margin-right: 10px;
+}
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+}
