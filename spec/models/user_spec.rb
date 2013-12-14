@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
     before do
-		@user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
+		  @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
     end
     subject { @user }
     it { should respond_to(:name) }
@@ -14,17 +14,44 @@ describe User do
     it { should respond_to(:password_confirmation )}
     it { should respond_to(:remember_token )}
     it { should respond_to(:authenticate)}
+    it { should respond_to(:microposts) }
     it { should be_valid }
-	it { should respond_to(:admin) }
- 	it { should respond_to(:authenticate) }
-	it { should be_valid }
+	  it { should respond_to(:admin) }
+ 	  it { should respond_to(:authenticate) }
+	  it { should be_valid }
   	it { should_not be_admin }
   	describe "with admin attribute set to 'true'" do
    		before { @user.toggle!(:admin) }
     	it { should be_admin }
   	end
-
-
+    describe "micropost associations" do
+      before { @user.save }
+      let!(:older_micropost) do
+        FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago) 
+      end
+      let!(:newer_micropost) do
+        FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
+      end
+      it "should have the right microposts in the right order" do 
+        @user.microposts.should == [newer_micropost, older_micropost]
+      end 
+    end
+    describe "micropost associations" do
+      before { @user.save }
+      let!(:older_micropost) do
+        FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago) 
+      end
+      let!(:newer_micropost) do
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
+      end
+      it "should destroy associated microposts" do
+        microposts = @user.microposts
+        @user.destroy
+        microposts.each do |micropost|
+          Micropost.find_by_id(micropost.id).should be_nil 
+        end
+      end 
+    end
     describe "when name is not present" do
     	before { @user.name = " " }
     	it { should_not be_valid }
@@ -33,14 +60,13 @@ describe User do
     	before { @user.name = "a" * 51 }
     	it { should_not be_valid }
     end
-
     describe "when email format is invalid" do
     	it "should be invalid" do
 			addresses = %w[user@foo,com user_at_foo.org example.user@foo. foo@bar_baz.com foo@bar+baz.com]
     		addresses.each do |invalid_address|
-        		@user.email = invalid_address
-        		@user.should_not be_valid
-			end 
+      		@user.email = invalid_address
+      		@user.should_not be_valid
+	   		end 
    		end
     	describe "when email format is valid" do
     		it "should be valid" do
@@ -50,14 +76,14 @@ describe User do
         			@user.should be_valid
 	  			end 
 			end
-  		end
+  	end
 	end
 	describe "when email address is already taken" do 
 		before do
-      		user_with_same_email = @user.dup
-      		user_with_same_email.save
-    	end
-    	it { should_not be_valid }
+  		user_with_same_email = @user.dup
+   		user_with_same_email.save
+  	end
+   	it { should_not be_valid }
 	end
 	describe "when email address is already taken" do
 		before do
@@ -65,9 +91,9 @@ describe User do
 			user_with_same_email.email = @user.email.upcase
 			user_with_same_email.save
 		end
-    	it { should_not be_valid }
-  	end
-  	describe "when password is not present" do
+    it { should_not be_valid }
+  end
+  describe "when password is not present" do
 		before { @user.password = @user.password_confirmation = " " }
 		it { should_not be_valid }
 	end
@@ -76,8 +102,8 @@ describe User do
 		it { should_not be_valid }
 	end
 	describe "when password confirmation is nil" do
-  		before { @user.password_confirmation = nil }
-  		it { should_not be_valid }
+		before { @user.password_confirmation = nil }
+		it { should_not be_valid }
 	end
 	describe "return value of authenticate method" do 
 		before { @user.save }
@@ -87,7 +113,7 @@ describe User do
 		end
 		describe "with invalid password" do
 			let(:user_for_invalid_password) { found_user.authenticate("invalid") }
-  		    it { should_not == user_for_invalid_password }
+  		it { should_not == user_for_invalid_password }
 			specify { user_for_invalid_password.should be_false }
 		end
 	end
