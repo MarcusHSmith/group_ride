@@ -1,4 +1,8 @@
 GroupRide::Application.routes.draw do
+  resources :events
+
+  resources :locations
+
   resources   :sessions,  only:   [:new,  :create,  :destroy]
   resources   :users do
     member do
@@ -6,6 +10,7 @@ GroupRide::Application.routes.draw do
     end
   end
   resources   :microposts,    only: [:create,         :destroy]
+  resources   :events,        only: [:create, :edit,  :show,   :destroy]
   resources   :relationships, only: [:create,         :destroy]
 
   root to: 'static_pages#home'
@@ -18,8 +23,6 @@ GroupRide::Application.routes.draw do
   #get "static_pages/contact"
   #get "static_pages/help"
   #get "static_pages/about"
-
-  resources :events
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]

@@ -2,9 +2,12 @@
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>User</th>
+    <th>Title</th>
+    <th>Date</th>
     <th>Content</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>User</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,9 +15,12 @@
 
 <% @events.each do |event| %>
   <tr>
-    <td><%= event.name %></td>
-    <td><%= event.user_id %></td>
+    <td><%= event.title %></td>
+    <td><%= event.date %></td>
     <td><%= event.content %></td>
+    <td><%= event.latitude %></td>
+    <td><%= event.longitude %></td>
+    <td><%= event.user_id %></td>
     <td><%= link_to 'Show', event %></td>
     <td><%= link_to 'Edit', edit_event_path(event) %></td>
     <td><%= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete %></td>
