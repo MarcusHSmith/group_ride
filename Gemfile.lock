@@ -32,6 +32,7 @@ GEM
       rake
     arel (3.0.3)
     bcrypt-ruby (3.0.1)
+    bootstrap-datetimepicker-rails (0.0.11)
     bootstrap-sass (2.0.0)
     bootstrap-will_paginate (0.0.10)
       will_paginate
@@ -171,6 +172,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   bcrypt-ruby (= 3.0.1)
+  bootstrap-datetimepicker-rails
   bootstrap-sass (= 2.0.0)
   bootstrap-will_paginate
   capybara (= 1.1.2)
