@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
-  # GET /events
-  # GET /events.json
+  before_filter :signed_in_user,  only: [:new, :create, :destroy, :edit, :update]
+  before_filter :correct_user,    only: [:edit, :update,  :destroy]
   def index
     @events = Event.all
 
@@ -40,7 +40,7 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(params[:event])
+    @event = current_user.events.build(params[:event])
 
     respond_to do |format|
       if @event.save
@@ -72,12 +72,23 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
-
-    respond_to do |format|
-      format.html { redirect_to events_url }
-      format.json { head :no_content }
-    end
+    redirect_to root_path, :notice => "Successfully deleted event"
   end
+  private
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_path, notice: "Please sign in."
+      end
+    end
+    def correct_user
+      @event = current_user.events.find_by_id(params[:id])
+      if !@event.present?
+        redirect_to events_path, :notice => "You do not own this event"
+      end
+    end
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
 end

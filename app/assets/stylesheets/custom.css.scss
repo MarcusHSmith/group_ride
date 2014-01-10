@@ -49,7 +49,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.7em;
+  font-size: 1.2em;
   letter-spacing: -1px;
   margin-bottom: 30px;
   text-align: center;
@@ -90,12 +90,12 @@ footer {
   color: $grayLight;
   a {
     color: $gray;
-    &:hover { 
+    &:hover {
       color: $grayDarker;
     }
-  }  
-  small { 
-    float: left; 
+  }
+  small {
+    float: left;
   }
   ul {
     float: right;
@@ -133,10 +133,11 @@ aside {
       line-height: 1;
     }
     h1 {
-      font-size: 1.6em;
+      font-size: 1.4em;
       text-align: left;
       letter-spacing: -1px;
       margin-bottom: 3px;
+      margin-top: 0px;
     }
   }
 }
@@ -180,9 +181,12 @@ aside {
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
-  height: auto;
   margin-bottom: 15px;
-  @include box_sizing;  
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
 }
 
 #error_explanation {
@@ -198,7 +202,7 @@ input, textarea, select, .uneditable-input {
   @extend .error;
 }
 
-/* users index */
+/* Users index */
 
 .users {
   list-style: none;
