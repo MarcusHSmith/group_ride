@@ -1,3 +1,4 @@
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -26,11 +27,12 @@
 </p>
 
 <p>
-  <b>User:</b>
-  <%= @event.user_id %>
+  <b>Creator:</b>
+  <%= @user.name %>
 </p>
 
-
-
+<div>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@event.latitude}%2C#{@event.longitude}" %>
+</div>
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

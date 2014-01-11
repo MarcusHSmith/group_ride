@@ -81,6 +81,7 @@ GEM
     geocoder (1.1.9)
     gherkin (2.12.2)
       multi_json (~> 1.3)
+    gmaps4rails (2.1.1)
     hike (1.2.3)
     httparty (0.12.0)
       json (~> 1.8)
@@ -169,6 +170,7 @@ GEM
     uglifier (2.3.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    underscore-rails (1.5.2)
     websocket (1.0.7)
     will_paginate (3.0.5)
     xpath (0.1.4)
@@ -191,6 +193,7 @@ DEPENDENCIES
   factory_girl_rails (= 1.4.0)
   faker
   geocoder
+  gmaps4rails
   jquery-rails (~> 2.3.0)
   jquery-ui-themes
   pg (= 0.12.2)
@@ -199,4 +202,5 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sqlite3 (= 1.3.5)
   uglifier (>= 1.0.3)
+  underscore-rails
   will_paginate
