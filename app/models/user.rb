@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_many  :followers, through: :reverse_relationships, source: :follower
 
   def feed
-    Micropost.from_users_followed_by(self)
+    Event.from_users_followed_by(self)
   end
   def following?(other_user)
     relationships.find_by_followed_id(other_user.id)
@@ -33,5 +33,4 @@ class User < ActiveRecord::Base
   		self.remember_token = SecureRandom.urlsafe_base64
   	end
   has_many :event
-  has_many :microposts,   dependent:  :destroy
 end
