@@ -14,3 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap-dropdown
 //= require_tree .
+//= require address_picker-rails
+
+AddressPickerRails.Pickers.applyOnReady();

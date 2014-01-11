@@ -17,12 +17,11 @@
     <%= f.datetime_select :date %>
     <%= f.label :Description %><br />
     <%= f.text_field :content %>
-    <%= f.label :Latitude %><br />
-    <%= f.text_field :latitude %>
-    <%= f.label :Longitude %><br />
-    <%= f.text_field :longitude %>
-  </div>
+    <%= f.label :Address %><br />
+    <%= f.text_field :address, :class => 'address-picker-input' %>
 
+
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

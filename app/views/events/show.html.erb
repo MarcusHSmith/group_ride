@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Title:</b>
+  <b>Event Title:</b>
   <%= @event.title %>
 </p>
 
@@ -11,7 +11,7 @@
 </p>
 
 <p>
-  <b>Content:</b>
+  <b>Description:</b>
   <%= @event.content %>
 </p>
 
@@ -29,6 +29,7 @@
   <b>User:</b>
   <%= @event.user_id %>
 </p>
+
 
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
