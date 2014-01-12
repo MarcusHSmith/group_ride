@@ -4,8 +4,9 @@
 <h1>
   <%= current_user.name %>
 </h1> <span>
-  <%= link_to "view my profile", current_user %>
+  <%= link_to "View profile", current_user %>
 </span>
 <span>
-<%= pluralize(current_user.microposts.count, "micropost") %>
+<%= link_to 'Create Event', new_event_path %>
+
 </span>

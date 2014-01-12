@@ -1,9 +1,14 @@
 class EventsController < ApplicationController
   before_filter :signed_in_user,  only: [:new, :create, :destroy, :edit, :update]
   before_filter :correct_user,    only: [:edit, :update,  :destroy]
+  #scope :time_search, ->(min, max) { 
+  #  where("time_column > ? AND time_column < ?", min, max)
+  #}
+  #scope :location_serach ->(lat, lon, distance) {
+
   def index
     @events = Event.all
-
+    @user = current_user
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @events }

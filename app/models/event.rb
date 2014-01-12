@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
   attr_accessible :content, :date, :title, :longitude, :latitude, :address, :address_latitude, :address_longitude, :address_locality, :address_country
   belongs_to 	:user
   validates		:content, 	:length => { :maximum => 140 }
+  validates   :title,   :length => { :maximum => 20 }
   validates 	:user_id, 	presence: true
   default_scope order: 'events.created_at DESC'
 
