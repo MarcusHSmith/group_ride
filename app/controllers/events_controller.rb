@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_filter :signed_in_user,  only: [:new, :create, :destroy, :edit, :update]
+  before_filter :signed_in_user,  only: [:new, :create, :destroy, :edit, :update, :attend]
   before_filter :correct_user,    only: [:edit, :update,  :destroy]
   #scope :time_search, ->(min, max) { 
   #  where("time_column > ? AND time_column < ?", min, max)
@@ -47,6 +47,7 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = current_user.events.build(params[:event])
+    @event.user_id = current_user
 
     respond_to do |format|
       if @event.save
@@ -75,6 +76,30 @@ class EventsController < ApplicationController
     end
   end
 
+  def attend
+    @event = Event.find(params[:id])
+    if @event.users.include?(current_user)
+      flash[:error] = "You're already attending this event."
+    else
+      current_user.events << @event
+      flash[:success] = "Attending event!"
+    end
+    redirect_to @event
+  end
+
+  def withdraw
+    event    = Event.find(params[:id])
+    attendee = Attendee.find_by_user_id_and_event_id(current_user.id, event.id)
+
+    if attendee.blank?
+      flash[:error] = "No current attendees"
+    else
+      attendee.delete
+      flash[:success] = 'You are no longer attending this event.'
+    end
+    redirect_to event
+  end
+  
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
@@ -97,4 +122,6 @@ class EventsController < ApplicationController
     def admin_user
       redirect_to(root_path) unless current_user.admin?
     end
+
+
 end

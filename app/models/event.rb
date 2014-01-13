@@ -9,6 +9,9 @@ class Event < ActiveRecord::Base
   geocoded_by :address
   after_validation :geocode
 
+  has_many :attendees, :dependent => :destroy
+  has_many :users, :through => :attendees
+
   def self.from_users_followed_by(user)
   	followed_user_ids = "SELECT followed_id FROM relationships
   		WHERE follower_id = :user_id"

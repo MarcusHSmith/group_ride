@@ -9,6 +9,14 @@ GroupRide::Application.routes.draw do
       get :following,   :followers
     end
   end
+  resources   :events do
+    post 'attend', on: :member
+  end
+  resources :events do
+    member do 
+      post 'withdraw'
+    end
+  end
   resources   :microposts,    only: [:create,         :destroy]
   resources   :events,        only: [:create, :edit,  :show,   :destroy]
   resources   :relationships, only: [:create,         :destroy]

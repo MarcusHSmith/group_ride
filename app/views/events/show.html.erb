@@ -30,6 +30,23 @@
   <b>Creator:</b>
   <%= @user.name %>
 </p>
+<p><strong>Attendees: </strong>
+    <%= link_to 'Attend Event', attend_event_path(@event.id), :method => :post %>
+
+    <ul>
+        <% for attendee in @event.users %>
+            <% if attendee.id == current_user.id %>
+                <li><strong><%= link_to attendee.name, user_path %></strong>
+                    <%= link_to 'Withdraw', withdraw_event_path(@event.id), :method => :post %>
+                </li>
+            <% else %>
+                <li><%= attendee.username %></li>
+            <% end %>
+        <% end %>   
+    </ul>
+</p>
+
+
 
 <div>
 <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@event.latitude}%2C#{@event.longitude}" %>
