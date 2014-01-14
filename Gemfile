@@ -15,6 +15,8 @@ gem 'address_picker-rails'
 gem 'jquery-ui-themes'
 gem 'gmaps4rails'
 gem 'underscore-rails'
+gem 'squeel'
+
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

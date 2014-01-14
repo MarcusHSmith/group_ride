@@ -12,6 +12,8 @@ class Event < ActiveRecord::Base
   has_many :attendees, :dependent => :destroy
   has_many :users, :through => :attendees
 
+  scope :time_search, ->(min, max) { where("time > ? AND time < ?", min, max) }
+
   def self.from_users_followed_by(user)
   	followed_user_ids = "SELECT followed_id FROM relationships
   		WHERE follower_id = :user_id"

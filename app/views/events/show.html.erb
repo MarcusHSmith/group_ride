@@ -2,13 +2,15 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Event Title:</b>
-  <%= @event.title %>
+  <b><%= @event.title %></b>
+  
+  <%= link_to 'Edit event', edit_event_path(@event) %>
+
 </p>
 
 <p>
   <b>Launch:</b>
-  <%= @event.date %>
+  <%= @event.date.to_formatted_s(:short) %>
 </p>
 
 <p>
@@ -30,6 +32,10 @@
   <b>Creator:</b>
   <%= @user.name %>
 </p>
+
+<div>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@event.latitude}%2C#{@event.longitude}" %>
+</div>
 <p><strong>Attendees: </strong>
     <%= link_to 'Attend Event', attend_event_path(@event.id), :method => :post %>
 
@@ -47,9 +53,3 @@
 </p>
 
 
-
-<div>
-<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@event.latitude}%2C#{@event.longitude}" %>
-</div>
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>

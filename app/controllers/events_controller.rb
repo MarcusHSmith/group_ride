@@ -1,20 +1,40 @@
 class EventsController < ApplicationController
   before_filter :signed_in_user,  only: [:new, :create, :destroy, :edit, :update, :attend]
   before_filter :correct_user,    only: [:edit, :update,  :destroy]
-  #scope :time_search, ->(min, max) { 
-  #  where("time_column > ? AND time_column < ?", min, max)
-  #}
-  #scope :location_serach ->(lat, lon, distance) {
 
   def index
-    @events = Event.all
+    if params[:search].present?
+      @events_location = Event.near(params[:search], 50, :order => :distance)
+    end
+    if (params[:timeMin].present? and params[:timeMax].present? and params[:timeMin] != params[:timeMin])
+      #min = DateTime.new(params[:timeMin]["1i"],2,3,4,5,6)
+      timeMin = DateTime.new(
+                              params["timeMin"]["(1i)"].to_i, 
+                              params["timeMin"]["(2i)"].to_i,
+                              params["timeMin"]["(3i)"].to_i,
+                              params["timeMin"]["(4i)"].to_i,
+                              params["timeMin"]["(5i)"].to_i,
+                              "0".to_i)
+      timeMax = DateTime.new(
+                              params["timeMax"]["(1i)"].to_i, 
+                              params["timeMax"]["(2i)"].to_i,
+                              params["timeMax"]["(3i)"].to_i,
+                              params["timeMax"]["(4i)"].to_i,
+                              params["timeMax"]["(5i)"].to_i,
+                              "0".to_i)     
+
+      #@events = Event.where('date BETWEEN ? AND ?', somedate, somedate)
+      @events_time = Event.all(:conditions => ['date >= ? AND date <= ?', timeMin, timeMax])
+    else
+      @events = Event.all
+    end
+    
     @user = current_user
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @events }
     end
   end
-
   # GET /events/1
   # GET /events/1.json
   def show

@@ -35,7 +35,11 @@ textarea {
   }
 }
 table td {
-  padding:0px 10px 0px 10px;
+  padding:0px 25px 0px 0px;
+}
+table th {
+  text-align: left;
+  padding:0px 25px 0px 0px;
 }
 
 
@@ -100,6 +104,8 @@ p2 {
   }
 }
 
+
+
 /* footer */
 
 footer {
@@ -123,6 +129,7 @@ footer {
       float: left;
       margin-left: 10px;
     }
+    
   }
 }
 
@@ -267,3 +274,4 @@ aside {
     margin-bottom: 5px;
   }
 }
+

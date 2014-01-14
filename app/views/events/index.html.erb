@@ -1,5 +1,17 @@
 <h1>Events</h1>
 
+<%= form_tag events_path, :method => :get do %>
+  <p>
+    Location
+    <%= text_field_tag :search, params[:search] %>
+    Min Time
+    <%= datetime_select :timeMin, params[:timeMin] %>
+    Max Time
+    <%= datetime_select :timeMax, params[:timeMax] %>
+    <%= submit_tag "Search Near", :name => nil %>
+  </p>
+<% end %>
+
 <table>
   <tr>
     <th>Title</th>
