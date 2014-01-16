@@ -4,7 +4,7 @@
       <%= link_to "theBikeParty", root_path, id: "logo" %>
       <nav>
         <ul class="nav pull-right">
-          <li><%= link_to "Home",    root_path %></li>
+          <li><%= link_to "Create",    new_event_path %></li>
           <li><%= link_to "Events",  events_path %></li>
           <!--<li><%= link_to "Help",    help_path %></li>-->
           <% if signed_in? %>

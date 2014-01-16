@@ -1,29 +1,33 @@
 <h1>Events</h1>
 
-<%= form_tag events_path, :method => :get do %>
-  <p>
-    Location
-    <%= text_field_tag :search, params[:search] %>
-    <br>
-    Min Time 
-    <%= datetime_select :timeMin, params[:timeMin] %>
-    <br>
-    Max Time
-    <%= datetime_select :timeMax, params[:timeMax] %>
-    <br>
-    Duration Min
-    <%= number_field :durationMin, params[:durationMin] %>
-    <br>
-    Duration Max
-    <%= number_field :durationMax, params[:durationMax] %>
-    <br>
-    Speed
-    <%= select_tag :speedArr, options_for_select([['----------',0],['Race',1],['Training',2],['Endurance',3],['Touring',4]], :selected=>params[:speedArr]) =%>
-    <br>
-    <%= submit_tag "Search", :name => nil %>
-  </p>
-<% end %>
-
+  <div id="accordion">
+    <p2>Search</p2>
+    <div>
+    <%= form_tag events_path, :method => :get do %>
+    <p>
+      Location
+      <%= text_field_tag :search, params[:search] %>
+      <br>
+      Min Time 
+      <%= datetime_select :timeMin, params[:timeMin] %>
+      <br>
+      Max Time
+      <%= datetime_select :timeMax, params[:timeMax] %>
+      <br>
+      Duration Min
+      <%= number_field :durationMin, params[:durationMin] %>
+      <br>
+      Duration Max
+      <%= number_field :durationMax, params[:durationMax] %>
+      <br>
+      Speed
+      <%= select_tag :speedArr, options_for_select([['----------',0],['Race',1],['Training',2],['Endurance',3],['Touring',4]], :selected=>params[:speedArr]) =%>
+      <br>
+      <%= submit_tag "Search", :name => nil %>
+    </p>
+    <% end %>
+    </div>
+  </div>
 <table>
   <tr>
     <th>Title</th>

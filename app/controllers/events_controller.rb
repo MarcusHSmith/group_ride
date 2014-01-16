@@ -92,7 +92,8 @@ class EventsController < ApplicationController
     p @event.user_id
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.html { redirect_to @event }
+        flash[:success] = "Event was successfully created."
         format.json { render json: @event, status: :created, location: @event }
       else
         format.html { render action: "new" }
@@ -108,7 +109,8 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.update_attributes(params[:event])
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.html { redirect_to @event}
+        flash[:success] = "Event was successfully updated."
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -157,7 +159,8 @@ class EventsController < ApplicationController
     end
     def correct_user
       if (Event.find(params[:id]).user_id != current_user.id and !current_user.admin?)
-        redirect_to events_path, :notice => "You do not own this event"
+        redirect_to events_path
+        flash[:error] = "You do not own this event"
       end
     end
     def admin_user
