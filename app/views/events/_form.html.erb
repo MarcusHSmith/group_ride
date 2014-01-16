@@ -15,6 +15,10 @@
     <%= f.text_field :title %>
     <%= f.label :Launch %><br />
     <%= f.datetime_select :date %>
+    <%= f.label :Duration_in_Minutes %><br />
+    <%= f.number_field :duration %>
+    <%= f.label :speed %><br />
+    <%= f.select :speedArr, [['Race',1],['Training',2],['Endurance',3],['Touring',4]] %>
     <%= f.label :Description %><br />
     <%= f.text_field :content %>
     <%= f.label :Address %><br />

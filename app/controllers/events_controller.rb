@@ -1,13 +1,17 @@
 class EventsController < ApplicationController
   before_filter :signed_in_user,  only: [:new, :create, :destroy, :edit, :update, :attend]
-  before_filter :correct_user,    only: [:edit, :update,  :destroy]
+  before_filter :correct_user,    only: [:edit, :update, :destroy]
+  before_filter   :admin_user,    only: :destroy
 
   def index
+    @events = Event.all
     if params[:search].present?
-      @events_location = Event.near(params[:search], 50, :order => :distance)
+      p "LOCATION SEARCH"
+      @events_loc = Event.near(params[:search], 50)
+      @events = @events & @events_loc
     end
-    if (params[:timeMin].present? and params[:timeMax].present? and params[:timeMin] != params[:timeMin])
-      #min = DateTime.new(params[:timeMin]["1i"],2,3,4,5,6)
+    if (params[:timeMin] != params[:timeMax])
+      p "TIME SEARCH"
       timeMin = DateTime.new(
                               params["timeMin"]["(1i)"].to_i, 
                               params["timeMin"]["(2i)"].to_i,
@@ -23,12 +27,29 @@ class EventsController < ApplicationController
                               params["timeMax"]["(5i)"].to_i,
                               "0".to_i)     
 
-      #@events = Event.where('date BETWEEN ? AND ?', somedate, somedate)
       @events_time = Event.all(:conditions => ['date >= ? AND date <= ?', timeMin, timeMax])
-    else
-      @events = Event.all
+      @events = @events & @events_time
     end
-    
+
+    if (params[:durationMin] != nil and params[:durationMin] != [""] and params[:durationMin] !={"\"\""=>""})
+      p "DurationMin SEARCH"
+      p params[:durationMin]
+      @events_durationMin = Event.all(:conditions => ['duration >= ?', params[:durationMin]])
+      @events = @events & @events_durationMin
+    end
+    if (params[:durationMax] != nil and params[:durationMax] != [""] and params[:durationMax] !={"\"\""=>""})
+      p "DurationMax SEARCH"
+      p params[:durationMax]
+      @events_durationMax = Event.all(:conditions => ['duration <= ?', params[:durationMax]])
+      @events = @events & @events_durationMax
+    end
+    if (params[:speedArr] != nil and params[:speedArr] != "0")
+      p "SpeedArr SEARCH"
+      p params[:speedArr]
+      @events_speedArr = Event.all(:conditions => ['speedArr == ?', params[:speedArr]])
+      @events = @events & @events_speedArr
+    end
+
     @user = current_user
     respond_to do |format|
       format.html # index.html.erb
@@ -67,8 +88,8 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = current_user.events.build(params[:event])
-    @event.user_id = current_user
-
+    @event.user_id = current_user.id
+    p @event.user_id
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -123,6 +144,7 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
+    @event = Event.find(params[:id])
     @event.destroy
     redirect_to root_path, :notice => "Successfully deleted event"
   end
@@ -134,8 +156,7 @@ class EventsController < ApplicationController
       end
     end
     def correct_user
-      @event = current_user.events.find_by_id(params[:id])
-      if !@event.present?
+      if (Event.find(params[:id]).user_id != current_user.id and !current_user.admin?)
         redirect_to events_path, :notice => "You do not own this event"
       end
     end

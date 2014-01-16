@@ -4,18 +4,30 @@
   <p>
     Location
     <%= text_field_tag :search, params[:search] %>
-    Min Time
+    <br>
+    Min Time 
     <%= datetime_select :timeMin, params[:timeMin] %>
+    <br>
     Max Time
     <%= datetime_select :timeMax, params[:timeMax] %>
-    <%= submit_tag "Search Near", :name => nil %>
+    <br>
+    Duration Min
+    <%= number_field :durationMin, params[:durationMin] %>
+    <br>
+    Duration Max
+    <%= number_field :durationMax, params[:durationMax] %>
+    <br>
+    Speed
+    <%= select_tag :speedArr, options_for_select([['----------',0],['Race',1],['Training',2],['Endurance',3],['Touring',4]], :selected=>params[:speedArr]) =%>
+    <br>
+    <%= submit_tag "Search", :name => nil %>
   </p>
 <% end %>
 
 <table>
   <tr>
     <th>Title</th>
-    <th>Launch</th>
+    <th>Launch Time</th>
     <th>Description</th>
     <th>Address</th>
     <th></th>
@@ -28,7 +40,7 @@
     <td><%= event.date.to_formatted_s(:short) %></td>
     <td><%= event.content %></td>
     <td><%= event.address %></td>
-    <% if event.user_id == @user.id %>
+    <% if signed_in? and (current_user.admin? or event.user_id == @user.id) %>
         <td><%= link_to 'Edit', edit_event_path(event) %></td>
         <td><%= link_to 'Destroy', event, method: :delete %></td>
     <% end %>
@@ -36,6 +48,7 @@
 
 <% end %>
 </table>
+
 
 <br />
 

@@ -9,6 +9,8 @@ GroupRide::Application.routes.draw do
       get :following,   :followers
     end
   end
+
+  resources   :events,        only: [:index, :create, :edit,  :show,   :destroy]
   resources   :events do
     post 'attend', on: :member
   end
@@ -18,7 +20,7 @@ GroupRide::Application.routes.draw do
     end
   end
   resources   :microposts,    only: [:create,         :destroy]
-  resources   :events,        only: [:create, :edit,  :show,   :destroy]
+
   resources   :relationships, only: [:create,         :destroy]
 
   root to: 'static_pages#home'

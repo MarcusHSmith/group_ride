@@ -14,6 +14,17 @@
 </p>
 
 <p>
+  <b>Duration:</b>
+  <%= @event.duration %>
+</p>
+
+<p>
+  <b>Speed:</b>
+  <%= ['n/a', 'Race','Training','Endurance', 'Touring'][@event.speedArr] %>
+</p>
+
+
+<p>
   <b>Description:</b>
   <%= @event.content %>
 </p>

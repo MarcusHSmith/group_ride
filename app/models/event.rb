@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessible :content, :date, :title, :longitude, :latitude, :address, :address_latitude, :address_longitude, :address_locality, :address_country
+  attr_accessible :content, :date, :title, :speedArr, :duration, :longitude, :latitude, :address, :address_latitude, :address_longitude, :address_locality, :address_country
   belongs_to 	:user
   validates		:content, 	:length => { :maximum => 140 }
   validates   :title,   :length => { :maximum => 20 }
@@ -12,7 +12,8 @@ class Event < ActiveRecord::Base
   has_many :attendees, :dependent => :destroy
   has_many :users, :through => :attendees
 
-  scope :time_search, ->(min, max) { where("time > ? AND time < ?", min, max) }
+  myOptions = ['race', 'training', 'endurance', 'touring']
+
 
   def self.from_users_followed_by(user)
   	followed_user_ids = "SELECT followed_id FROM relationships
